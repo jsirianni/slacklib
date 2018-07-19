@@ -30,6 +30,7 @@ func buildPayload(message SlackPost) []byte {
     var err error
 	payload, err = json.Marshal(message)
     if err != nil {
+        fmt.Println("Failed to marshal payload")
         fmt.Println(err.Error())
         return nil
     } else {
