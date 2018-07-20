@@ -2,7 +2,7 @@
 A simple package that makes it easy to generate slack notifications
 
 ## Usage
-See slacklib_cli.go for an example
+See `slacklib_cli.go` for an example
 ```
 go build slacklib_cli.go
 ./slacklib_cli
