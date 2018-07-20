@@ -3,14 +3,15 @@ package slacklib
 import (
     "fmt"
     "bytes"
+    "strconv"
     "encoding/json"
     "net/http"
 )
 
 
 type SlackPost struct {
-    Channel string
-    Text    string
+    Channel string `json:"channel"`
+    Text    string `json:"text"`
 }
 
 
@@ -19,9 +20,12 @@ type SlackPost struct {
 // arguments and sends a message. Advanced webhook features
 // are not supported with this function
 func BasicMessage(message SlackPost, hook_url string) bool {
-    result := sendPayload(buildPayload(message), hook_url)
-
-    return result
+    payload := buildPayload(message)
+    if payload == nil {
+        return false
+    }
+    fmt.Println(string(payload))
+    return sendPayload(payload, hook_url)
 }
 
 
@@ -46,9 +50,12 @@ func sendPayload(payload []byte, hook_url string) bool {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	defer resp.Body.Close()
+    if err != nil {
+        fmt.Println(err.Error())
+    }
 
-	if err != nil || resp.StatusCode != 200 {
-		fmt.Println(err)
+	if resp.StatusCode != 200 {
+		fmt.Println("Slack returned status: " + strconv.Itoa(resp.StatusCode))
 		return false
 	} else {
 		return true
