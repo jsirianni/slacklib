@@ -5,7 +5,10 @@ A simple package that makes it easy to generate slack notifications
 See slacklib_cli.go for an example
 ```
 go build slacklib_cli.go
-./slacklib_cli -c "#alert_channel" -m "Server abc failed to start" -h "https://hooks.slack.com/some/hook/endpoint"
+./slacklib_cli
+  -c "#alert_channel" \
+  -m "Server abc failed to start" \
+  -h "https://hooks.slack.com/some/hook/endpoint"
 ```
 
 Example client code
