@@ -45,6 +45,10 @@ func buildPayload(message SlackPost) []byte {
 
 func sendPayload(payload []byte, hook_url string) bool {
     req, err := http.NewRequest("POST", hook_url, bytes.NewBuffer(payload))
+    if err != nil {
+        fmt.Println(err.Error())
+        return false
+    }
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
